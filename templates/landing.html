@@ -24,7 +24,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="btn-hero">Create free account</a>
-            <a href="#" class="btn-hero">See how it works</a>
+            <a href="#" class="btn-hero" id="btn-how-it-works">See how it works</a>
         </div>
         <div class="app-preview">
             <div class="app-preview-bar">
@@ -101,4 +101,52 @@
     </div>
 </section>
 
+<!-- Video modal -->
+<div class="video-modal" id="video-modal" aria-hidden="true">
+    <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+    <div class="video-modal-box">
+        <button class="video-modal-close" id="video-modal-close" aria-label="Close">&times;</button>
+        <div class="video-wrapper">
+            <iframe
+                id="video-iframe"
+                src=""
+                data-src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Spendly — See how it works"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    var modal    = document.getElementById('video-modal');
+    var iframe   = document.getElementById('video-iframe');
+    var openBtn  = document.getElementById('btn-how-it-works');
+    var closeBtn = document.getElementById('video-modal-close');
+    var backdrop = document.getElementById('video-modal-backdrop');
+
+    function openModal(e) {
+        e.preventDefault();
+        iframe.src = iframe.dataset.src;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+        iframe.src = '';
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+})();
+</script>
 {% endblock %}
